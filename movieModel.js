@@ -6,16 +6,6 @@ const { Schema } = mongoose
  as an existing named collection.
 */
 
-const Movie = mongoose.model(
-  'Movie',
-  new Schema({
-    title: String,
-    rating: String,
-    plot: String,
-    year: Date,
-    runtime: Number,
-  }),
-  'movies'
-)
+const Movie = mongoose.model('Movie', new Schema({}), 'movies')
 
 export default Movie

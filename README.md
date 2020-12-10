@@ -4,6 +4,13 @@ Spinning up a new collection is easy with Mongoose. We simply create a Model, an
 
 This project connects Mongoose to a collection called 'movies' from the [Sample MFlix Dataset](https://docs.atlas.mongodb.com/sample-data/sample-mflix).
 
+## TL;DR
+
+- Q: I have a bunch of data in a Mongo collection. How can I connect Mongoose to that existing data?
+- A: Use the third parameter of mongoose.model to identify the populated collection.
+
+  `const Movie = mongoose.model('Movie', new Schema({}), 'movies')`
+
 ## Do This First
 
 - Install the the [Sample MFlix Dataset](https://docs.atlas.mongodb.com/sample-data/sample-mflix).
@@ -17,7 +24,7 @@ This project connects Mongoose to a collection called 'movies' from the [Sample 
 
    - `app.js`: Express server
    - `db.js`: Connect Mongoose to Mongo Atlas
-   - `movieModel.js`: a Mongooose model pointing to an existing collection
+   - `movieModel.js`: a Mongoose model pointing to an existing collection
 
    You can create the required files with a single line of code.
 
@@ -73,21 +80,11 @@ This project connects Mongoose to a collection called 'movies' from the [Sample 
    const { Schema } = mongoose
 
    /* 
-   The third parameter to mongoose.model() identifies 'movies'
-   as an existing named collection.
-   */
+    The third parameter to mongoose.model() identifies 'movies'
+    as an existing named collection.
+    */
 
-   const Movie = mongoose.model(
-     'Movie',
-     new Schema({
-       title: String,
-       rating: String,
-       plot: String,
-       year: Date,
-       runtime: Number,
-     }),
-     'movies'
-   )
+   const Movie = mongoose.model('Movie', new Schema({}), 'movies')
 
    export default Movie
    ```
