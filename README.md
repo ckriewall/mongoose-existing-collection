@@ -94,6 +94,37 @@ This project connects Mongoose to a collection called 'movies' from the [Sample 
    export default Movie
    ```
 
+1. Configure Express.
+
+   In `app.js` listen for connections and respond to GET `/`.
+
+   ```js
+   import express from 'express'
+   import connectDB from './db.js'
+   import dotenv from 'dotenv'
+   import Movie from './movieModel.js'
+
+   dotenv.config()
+
+   const app = express()
+   const port = 5000
+
+   connectDB()
+
+   app.get('/', async (req, res) => {
+     try {
+       const data = await Movie.find({ title: 'Batman' }).limit(5)
+       res.json(data)
+     } catch (error) {
+       console.log(error)
+     }
+   })
+
+   app.listen(port, () => {
+     console.log('Server is online on port ' + port)
+   })
+   ```
+
 1. Start the server with `$ nodemon app`. You should see confirmation that the server and database are online.
 
    ```lang-bash
@@ -109,4 +140,4 @@ This project connects Mongoose to a collection called 'movies' from the [Sample 
 
 1. Test the database connection.
 
-   In a browser go to `http://localhost:5000`. The browser will return a JSON object containing information about movies titled 'Batman'.
+   Navigate to `http://localhost:5000`. The browser will return a JSON object containing information about movies titled 'Batman'.
