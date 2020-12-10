@@ -1,6 +1,9 @@
 import express from 'express'
 import connectDB from './db.js'
+import dotenv from 'dotenv'
 import Movie from './movieModel.js'
+
+dotenv.config()
 
 const app = express()
 const port = 5000

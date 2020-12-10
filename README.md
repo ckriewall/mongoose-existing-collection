@@ -6,8 +6,8 @@ This project connects Mongoose to a collection called 'movies' from the [Sample 
 
 ## TL;DR
 
-- Q: I have a bunch of data in a Mongo collection. How can I connect Mongoose to that existing data?
-- A: Use the third parameter of mongoose.model to identify the populated collection.
+- Q: I have data in a Mongo collection. How can I connect Mongoose to that existing data?
+- A: Use the third parameter of `mongoose.model` to identify the populated collection.
 
   `const Movie = mongoose.model('Movie', new Schema({}), 'movies')`
 
@@ -22,13 +22,14 @@ This project connects Mongoose to a collection called 'movies' from the [Sample 
 
 1. In `mongoose-existing-collection` create the project files.
 
-   - `app.js`: Express server
-   - `db.js`: Connect Mongoose to Mongo Atlas
-   - `movieModel.js`: a Mongoose model pointing to an existing collection
+   - `app.js`: run Express server
+   - `db.js`: connect Mongoose to Mongo Atlas
+   - `.env`: store the Mongo connection string
+   - `movieModel.js`: point to an existing collection
 
    You can create the required files with a single line of code.
 
-   `$ touch app.js db.js movieModel.js`
+   `$ touch app.js db.js .env movieModel.js`
 
 1. Initialize npm
 
@@ -36,7 +37,7 @@ This project connects Mongoose to a collection called 'movies' from the [Sample 
 
 1. Install required packages
 
-   `$ npm i express mongoose nodemon`
+   `$ npm i express dotenv mongoose nodemon`
 
 1. Enable ES6 modules support.
 
@@ -48,18 +49,22 @@ This project connects Mongoose to a collection called 'movies' from the [Sample 
    "type": "module",
    ```
 
+1. Store your Mongo Connection String.
+
+   In `.env`, add your [Mongo Connection String](https://docs.mongodb.com/manual/reference/connection-string/).
+
+   `MONGO_URI = 'mongodb+srv://CONN_STRING'`
+
 1. Configure a Mongoose connection.
 
-   In `db.js` add the following. Replace `mongo_uri` with your [Mongo Connection String](https://docs.mongodb.com/manual/reference/connection-string/).
+   In `db.js` add the following.
 
    ```js
    import mongoose from 'mongoose'
 
-   const uri = 'mongo_uri'
-
    const connectDB = async () => {
      try {
-       const conn = mongoose.connect(uri, {
+       const conn = mongoose.connect(process.env.MONGO_URI, {
          useUnifiedTopology: true,
          useNewUrlParser: true,
          useCreateIndex: true,
@@ -81,7 +86,7 @@ This project connects Mongoose to a collection called 'movies' from the [Sample 
 
    /* 
     The third parameter to mongoose.model() identifies 'movies'
-    as an existing named collection.
+    as an existing collection.
     */
 
    const Movie = mongoose.model('Movie', new Schema({}), 'movies')
@@ -104,4 +109,4 @@ This project connects Mongoose to a collection called 'movies' from the [Sample 
 
 1. Test the database connection.
 
-   In a browser go to http://localhost:5000. The browser will return a JSON object containing information about movies titled 'Batman'.
+   In a browser go to `http://localhost:5000`. The browser will return a JSON object containing information about movies titled 'Batman'.
